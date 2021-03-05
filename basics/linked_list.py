@@ -28,6 +28,23 @@ class LinkedList:
         """
         self.head = None
 
+    def __len__(self):
+        p = self.head
+        count = 0
+        while p is not None:
+            p = p.next
+            count += 1
+        return count
+
+    def to_list(self):
+        list_len = self.__len__()
+        list_arr = [0] * list_len
+        p = self.head
+        for n in range(list_len):
+            list_arr[n] = p.data
+            p = p.next
+        return list_arr
+
     "------------------Print------------------"
     def print_list(self):
         """
@@ -45,6 +62,9 @@ class LinkedList:
         :param data: value to search
         :return: node containing the data
         """
+        if self.head is None:
+            return
+
         p = self.head
         while p.data != data:
             if p.next is None:
@@ -58,6 +78,9 @@ class LinkedList:
         :param data: value to search
         :return: node pointing to node containing the data
         """
+        if self.head is None:
+            return
+
         p = self.head
         while p.next.data != data:
             p = p.next
@@ -121,6 +144,9 @@ class LinkedList:
         """
         remove node from the beginning of the list
         """
+        if self.head is None:
+            return
+
         tmp = self.head
         self.head = tmp.next
         del tmp
@@ -132,6 +158,9 @@ class LinkedList:
         """
         if idx == 0:
             self.remove_beginning()
+            return
+
+        if self.head is None:
             return
 
         p = self.head
