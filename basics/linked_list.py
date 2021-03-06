@@ -36,14 +36,15 @@ class LinkedList:
             count += 1
         return count
 
-    def to_list(self):
+    def __str__(self):
+        return str(list(self))
+
+    def __iter__(self):
         list_len = self.__len__()
-        list_arr = [0] * list_len
         p = self.head
-        for n in range(list_len):
-            list_arr[n] = p.data
+        for _ in range(list_len):
+            yield p.data
             p = p.next
-        return list_arr
 
     "------------------Print------------------"
     def print_list(self):

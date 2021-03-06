@@ -12,6 +12,17 @@ class Test(unittest.TestCase):
 
         self.assertEqual(len(list1), nums)
 
+    def test_str(self):
+        list1 = LinkedList()
+
+        nums = 10
+        for n in range(nums):
+            list1.insert_end(n)
+
+        reference_arr = [n for n in range(nums)]
+
+        self.assertEqual(list(list1), reference_arr)
+
     "------------------Search------------------"
     def test_find_node(self):
         list1 = LinkedList()
@@ -49,7 +60,7 @@ class Test(unittest.TestCase):
         for n in range(nums):
             list1.insert_beginning(n)
 
-        list_arr = list1.to_list()
+        list_arr = list(list1)
         reference_arr = [n-1 for n in range(nums, 0, -1)]
 
         self.assertEqual(list_arr, reference_arr)
@@ -61,7 +72,7 @@ class Test(unittest.TestCase):
         for n in range(nums):
             list1.insert_end(n)
 
-        list_arr = list1.to_list()
+        list_arr = list(list1)
 
         reference_arr = [n for n in range(nums)]
         self.assertEqual(list_arr, reference_arr)
@@ -77,7 +88,7 @@ class Test(unittest.TestCase):
             list1.insert_end(n)
         list1.insert(insert_val, insert_idx)
 
-        list_arr = list1.to_list()
+        list_arr = list(list1)
         reference_arr = [n for n in range(nums)]
         reference_arr = reference_arr[:insert_idx] + [insert_val] + reference_arr[insert_idx:]
 
@@ -87,14 +98,14 @@ class Test(unittest.TestCase):
         list1 = LinkedList()
         list1.insert(10, 3)
 
-        list_arr = list1.to_list()
+        list_arr = list(list1)
 
         self.assertEqual(list_arr, [])
 
         list1.insert(20, 0)
         list1.insert(30, 3)
 
-        list_arr = list1.to_list()
+        list_arr = list(list1)
         self.assertEqual(list_arr, [20])
 
     "------------------Remove------------------"
@@ -107,7 +118,7 @@ class Test(unittest.TestCase):
             list1.insert_end(n)
 
         list1.remove_beginning()
-        list_arr = list1.to_list()
+        list_arr = list(list1)
 
         reference_arr = [n for n in range(nums)][1:]
         self.assertEqual(list_arr, reference_arr)
@@ -123,7 +134,7 @@ class Test(unittest.TestCase):
         list1.remove_by_index(100)
 
         list1.remove_by_index(3)
-        list_arr = list1.to_list()
+        list_arr = list(list1)
 
         reference_arr = [n for n in range(nums)]
         reference_arr = reference_arr[:3] + reference_arr[4:]
@@ -140,7 +151,7 @@ class Test(unittest.TestCase):
         list1.remove_by_value('100')
 
         list1.remove_by_value('3')
-        list_arr = list1.to_list()
+        list_arr = list(list1)
 
         reference_arr = [str(n) for n in range(nums)]
         reference_arr = reference_arr[:3] + reference_arr[4:]
