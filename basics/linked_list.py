@@ -37,6 +37,10 @@ class LinkedList:
         return count
 
     def __str__(self):
+        """
+        convert linked list to list and return as string
+        :return: linked list as string
+        """
         return str(list(self))
 
     def __iter__(self):
