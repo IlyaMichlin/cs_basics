@@ -29,10 +29,10 @@ class LinkedList:
         self.head = None
 
     def __len__(self):
-        p = self.head
+        node = self.head
         count = 0
-        while p is not None:
-            p = p.next
+        while node is not None:
+            node = node.next
             count += 1
         return count
 
@@ -45,20 +45,20 @@ class LinkedList:
 
     def __iter__(self):
         list_len = self.__len__()
-        p = self.head
+        node = self.head
         for _ in range(list_len):
-            yield p.data
-            p = p.next
+            yield node.data
+            node = node.next
 
     "------------------Print------------------"
     def print_list(self):
         """
         print all nodes data
         """
-        p = self.head
-        while p is not None:
-            print(p.data)
-            p = p.next
+        node = self.head
+        while node is not None:
+            print(node.data)
+            node = node.next
 
     "------------------Search------------------"
     def find_node(self, data):
@@ -70,12 +70,12 @@ class LinkedList:
         if self.head is None:
             return
 
-        p = self.head
-        while p.data != data:
-            if p.next is None:
+        node = self.head
+        while node.data != data:
+            if node.next is None:
                 return
-            p = p.next
-        return p
+            node = node.next
+        return node
 
     def find_node_pointer(self, data):
         """
@@ -86,12 +86,12 @@ class LinkedList:
         if self.head is None:
             return
 
-        p = self.head
-        while p.next.data != data:
-            p = p.next
-            if p.next is None:
+        node = self.head
+        while node.next.data != data:
+            node = node.next
+            if node.next is None:
                 return
-        return p
+        return node
 
     "------------------Insert------------------"
     def insert_beginning(self, data):
@@ -112,10 +112,10 @@ class LinkedList:
             self.insert_beginning(data)
             return
 
-        p = self.head
-        while p.next is not None:
-            p = p.next
-        p.next = Node(data)
+        node = self.head
+        while node.next is not None:
+            node = node.next
+        node.next = Node(data)
 
     def insert(self, data, idx):
         """
@@ -130,19 +130,19 @@ class LinkedList:
         if self.head is None:
             return
 
-        p = self.head
+        node = self.head
         for i in range(idx - 1):
-            p = p.next
-            if p is None:
+            node = node.next
+            if node is None:
                 return
 
-        if p.next is None:
-            p.next = Node(data)
+        if node.next is None:
+            node.next = Node(data)
         else:
-            node = Node(data)
-            tmp = p.next
-            p.next = node
-            node.next = tmp
+            new_node = Node(data)
+            tmp = node.next
+            node.next = new_node
+            new_node.next = tmp
 
     "------------------Remove------------------"
     def remove_beginning(self):
@@ -168,12 +168,12 @@ class LinkedList:
         if self.head is None:
             return
 
-        p = self.head
+        node = self.head
         for _ in range(idx - 1):
-            p = p.next
-            if p.next is None:
+            node = node.next
+            if node.next is None:
                 return
-        remove_next(p)
+        remove_next(node)
 
     def remove_by_value(self, data):
         """
@@ -186,5 +186,5 @@ class LinkedList:
             self.remove_beginning()
             return
 
-        p = self.find_node_pointer(data)
-        remove_next(p)
+        node = self.find_node_pointer(data)
+        remove_next(node)
