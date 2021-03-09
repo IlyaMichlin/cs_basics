@@ -94,37 +94,36 @@ class LinkedList:
         return node
 
     "------------------Insert------------------"
-    def insert_beginning(self, data):
+    def insert_beginning(self, new_node):
         """
         insert node at the beginning of the list
-        :param data: new node value
+        :param new_node: new node
         """
-        node = Node(data)
-        node.next = self.head
-        self.head = node
+        new_node.next = self.head
+        self.head = new_node
 
-    def insert_end(self, data):
+    def insert_end(self, new_node):
         """
         insert node at the end of the list
-        :param data: new node value
+        :param new_node: new node
         """
         if self.head is None:
-            self.insert_beginning(data)
+            self.insert_beginning(new_node)
             return
 
         node = self.head
         while node.next is not None:
             node = node.next
-        node.next = Node(data)
+        node.next = new_node
 
-    def insert(self, data, idx):
+    def insert(self, new_node, idx):
         """
         insert node at a specific index in the list
         :param idx: index of insertion
-        :param data: new node value
+        :param new_node: new node value
         """
         if idx == 0:
-            self.insert_beginning(data)
+            self.insert_beginning(new_node)
             return
 
         if self.head is None:
@@ -137,9 +136,8 @@ class LinkedList:
                 return
 
         if node.next is None:
-            node.next = Node(data)
+            node.next = new_node
         else:
-            new_node = Node(data)
             tmp = node.next
             node.next = new_node
             new_node.next = tmp
