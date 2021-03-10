@@ -284,6 +284,31 @@ class Test(unittest.TestCase):
         data = get_data_from_last_to_first(list1.fild_last_node())
         self.assertEqual(data, reference_arr[::-1])
 
+    def test_remove_end(self):
+        """
+        test remove_end()
+        """
+        # test on empty linked list
+        list1 = CircularLinkedList()
+        list1.remove_end()
+
+        # generate linked list
+        nums = 10
+        list1, reference_arr = generate_filled_list(nums)
+
+        # remove from beginning
+        list1.remove_end()
+        list_arr = list(list1)
+
+        # compare results to reference
+        reference_arr = reference_arr[:-1]
+        self.assertEqual(list_arr, reference_arr)
+
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
+
+
     def test_remove_by_index(self):
         """
         test remove_by_index()

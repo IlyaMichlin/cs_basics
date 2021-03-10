@@ -20,6 +20,8 @@ def remove_node(node, head):
     """
     if head == node:
         head = node.next
+    if node.next == node:
+        head = None
     node.next.prev = node.prev
     node.prev.next = node.next
     del node
@@ -144,6 +146,15 @@ class CircularLinkedList(DoublyLinkedList):
         node = self.head
         # self.head = node.next
         self.head = remove_node(node, self.head)
+
+    def remove_end(self):
+        """
+        remove node from the end of list
+        """
+        if self.head is None:
+            return
+
+        self.head = remove_node(self.head.prev, self.head)
 
     def remove_by_index(self, idx):
         """
