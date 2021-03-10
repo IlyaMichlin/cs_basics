@@ -16,9 +16,6 @@ def remove_node(node):
 
 
 class DoublyLinkedList(LinkedList):
-    def __init__(self):
-        super().__init__()
-
     "------------------Insert------------------"
     def insert_beginning(self, new_node):
         """

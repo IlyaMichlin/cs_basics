@@ -132,6 +132,10 @@ class Test(unittest.TestCase):
         """
         test __len__()
         """
+        # test on empty linked list
+        list1 = LinkedList()
+        self.assertEqual(len(list1), 0)
+
         # generate linked list
         nums = 10
         list1 = generate_filled_list(nums, with_ref=False)

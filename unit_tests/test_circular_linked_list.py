@@ -1,5 +1,6 @@
 import unittest
-from basics.doubly_linked_list import DoublyLinkedList, DolbyNode
+from basics.circular_linked_list import CircularLinkedList
+from basics.doubly_linked_list import DolbyNode
 
 
 def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
@@ -11,7 +12,7 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
     :param as_str: convert data to string flag
     :return: generated linked list with reference list optionally
     """
-    list1 = DoublyLinkedList()
+    list1 = CircularLinkedList()
 
     if asc:
         if as_str:
@@ -63,10 +64,11 @@ def get_data_from_last_to_first(last_node):
     :param last_node: last node in list
     :return: data from last node to first
     """
+    node = last_node.prev
     data = [last_node.data]
-    while last_node.prev is not None:
-        last_node = last_node.prev
-        data += [last_node.data]
+    while node != last_node:
+        data += [node.data]
+        node = node.prev
 
     return data
 
@@ -78,14 +80,14 @@ class Test(unittest.TestCase):
         test insert_beginning()
         """
         # test insert on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         data = 10
         idx = 10
         list1.insert(DolbyNode(data), idx)
         self.assertEqual(list(list1), [])
 
         # generate linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         list1.insert(DolbyNode(10), 0)
         list1.insert(DolbyNode(20), 1)
         list1.insert(DolbyNode(30), 1)
@@ -105,7 +107,7 @@ class Test(unittest.TestCase):
         test insert_end()
         """
         # test insert_end on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         data = 10
         list1.insert_end(DolbyNode(data))
         self.assertEqual(list(list1), [data])
@@ -125,7 +127,7 @@ class Test(unittest.TestCase):
         test insert()
         """
         # test on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         list1.insert(DolbyNode(10), 3)
         list_arr = list(list1)
         self.assertEqual(list_arr, [])
@@ -134,7 +136,7 @@ class Test(unittest.TestCase):
         list1.insert(DolbyNode(20), 0)
         list1.insert(DolbyNode(30), 3)
         list_arr = list(list1)
-        self.assertEqual(list_arr, [20])
+        self.assertEqual(list_arr, [20, 30])
 
         # generate linked list
         nums = 10
@@ -160,8 +162,13 @@ class Test(unittest.TestCase):
         test __len__()
         """
         # test on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         self.assertEqual(len(list1), 0)
+
+        # test on linked list with 1 node
+        list1 = CircularLinkedList()
+        list1.insert_end(DolbyNode(1))
+        self.assertEqual(len(list1), 1)
 
         # generate linked list
         nums = 10
@@ -187,7 +194,7 @@ class Test(unittest.TestCase):
         test find_node()
         """
         # test search on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         node = list1.find_node(10)
         self.assertEqual(node, None)
 
@@ -209,7 +216,7 @@ class Test(unittest.TestCase):
         test find_node_pointer()
         """
         # test search on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         node = list1.find_node_pointer(10)
         self.assertEqual(node, None)
 
@@ -232,7 +239,7 @@ class Test(unittest.TestCase):
         test fild_last_node()
         """
         # test search on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         node = list1.fild_last_node()
         self.assertEqual(node, None)
 
@@ -258,7 +265,7 @@ class Test(unittest.TestCase):
         test remove_beginning()
         """
         # test on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         list1.remove_beginning()
 
         # generate linked list
@@ -282,7 +289,7 @@ class Test(unittest.TestCase):
         test remove_by_index()
         """
         # test on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         list1.remove_by_index(10)
 
         # generate linked list
@@ -290,8 +297,10 @@ class Test(unittest.TestCase):
         list1, reference_arr = generate_filled_list(nums)
 
         # test removing index outside of linked list
-        list1.remove_by_index(100)
+        idx = 100
+        list1.remove_by_index(idx)
         list_arr = list(list1)
+        del reference_arr[idx % len(reference_arr)]
         self.assertEqual(list_arr, reference_arr)
 
         # test remove index from middle of linked list
@@ -309,7 +318,7 @@ class Test(unittest.TestCase):
         test remove by value
         """
         # test on empty linked list
-        list1 = DoublyLinkedList()
+        list1 = CircularLinkedList()
         list1.remove_by_value(10)
 
         # generate linked list
