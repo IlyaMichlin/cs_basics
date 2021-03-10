@@ -1,5 +1,5 @@
 import unittest
-from basics.queue import Queue
+from basics.queue_struct import Queue
 
 
 def generate_queue(queue_size):
