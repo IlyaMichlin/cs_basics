@@ -196,6 +196,31 @@ class Test(unittest.TestCase):
         node = list1.find_node_pointer(search_node)
         self.assertEqual(node.next.data, search_node)
 
+    def test_fild_last_node(self):
+        """
+        test fild_last_node()
+        """
+        # test search on empty linked list
+        list1 = LinkedList()
+        node = list1.fild_last_node()
+        self.assertEqual(node, None)
+
+        # generate linked list
+        nums = 1
+        list1 = generate_filled_list(nums, with_ref=False)
+
+        # test for finding last node with 1 node
+        last_node = list1.fild_last_node()
+        self.assertEqual(last_node.data, nums - 1)
+
+        # generate linked list
+        nums = 10
+        list1 = generate_filled_list(nums, with_ref=False)
+
+        # test for finding last node
+        last_node = list1.fild_last_node()
+        self.assertEqual(last_node.data, nums - 1)
+
     "------------------Remove------------------"
     def test_remove_beginning(self):
         """

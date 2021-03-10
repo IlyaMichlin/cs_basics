@@ -57,6 +57,20 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
             return list1
 
 
+def get_data_from_last_to_first(last_node):
+    """
+    read and return data in list from last node to first
+    :param last_node: last node in list
+    :return: data from last node to first
+    """
+    data = [last_node.data]
+    while last_node.prev is not None:
+        last_node = last_node.prev
+        data += [last_node.data]
+
+    return data
+
+
 class Test(unittest.TestCase):
     "------------------Insert------------------"
     def test_insert_beginning(self):
@@ -81,6 +95,11 @@ class Test(unittest.TestCase):
         list_arr = list(list1)
         self.assertEqual(list_arr, reference_arr)
 
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
+
+
     def test_insert_end(self):
         """
         test insert_end()
@@ -96,6 +115,10 @@ class Test(unittest.TestCase):
         list1, reference_arr = generate_filled_list(nums)
         list_arr = list(list1)
         self.assertEqual(list_arr, reference_arr)
+
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
 
     def test_insert(self):
         """
@@ -126,6 +149,10 @@ class Test(unittest.TestCase):
         list_arr = list(list1)
         reference_arr = reference_arr[:insert_idx] + [insert_val] + reference_arr[insert_idx:]
         self.assertEqual(list_arr, reference_arr)
+
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
 
     "------------------Generic------------------"
     def test_len(self):
@@ -196,6 +223,31 @@ class Test(unittest.TestCase):
         node = list1.find_node_pointer(search_node)
         self.assertEqual(node.next.data, search_node)
 
+    def test_fild_last_node(self):
+        """
+        test fild_last_node()
+        """
+        # test search on empty linked list
+        list1 = DoublyLinkedList()
+        node = list1.fild_last_node()
+        self.assertEqual(node, None)
+
+        # generate linked list
+        nums = 1
+        list1 = generate_filled_list(nums, with_ref=False)
+
+        # test for finding last node with 1 node
+        last_node = list1.fild_last_node()
+        self.assertEqual(last_node.data, nums - 1)
+
+        # generate linked list
+        nums = 10
+        list1 = generate_filled_list(nums, with_ref=False)
+
+        # test for finding last node
+        last_node = list1.fild_last_node()
+        self.assertEqual(last_node.data, nums - 1)
+
     "------------------Remove------------------"
     def test_remove_beginning(self):
         """
@@ -216,6 +268,10 @@ class Test(unittest.TestCase):
         # compare results to reference
         reference_arr = reference_arr[1:]
         self.assertEqual(list_arr, reference_arr)
+
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
 
     def test_remove_by_index(self):
         """
@@ -240,6 +296,10 @@ class Test(unittest.TestCase):
         reference_arr = reference_arr[:3] + reference_arr[4:]
         self.assertEqual(list_arr, reference_arr)
 
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
+
     def test_remove_by_value(self):
         """
         test remove by value
@@ -262,6 +322,10 @@ class Test(unittest.TestCase):
         list_arr = list(list1)
         reference_arr = reference_arr[:3] + reference_arr[4:]
         self.assertEqual(list_arr, reference_arr)
+
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
 
 
 if __name__ == '__main__':

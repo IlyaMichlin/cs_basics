@@ -78,7 +78,8 @@ class DoublyLinkedList(LinkedList):
         if self.head is None:
             return
         super().remove_beginning()
-        self.head.next.prev = None
+        self.head.next.prev = self.head
+        self.head.prev = None
 
     def remove_by_index(self, idx):
         """
@@ -112,6 +113,3 @@ class DoublyLinkedList(LinkedList):
 
         node = super().find_node(data)
         remove_node(node)
-
-
-list1 = DoublyLinkedList()

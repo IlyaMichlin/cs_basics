@@ -93,6 +93,19 @@ class LinkedList:
                 return
         return node
 
+    def fild_last_node(self):
+        """
+        find and return the last node in the list
+        :return: last node in the list
+        """
+        if self.head is None:
+            return
+
+        node = self.head
+        while node.next is not None:
+            node = node.next
+        return node
+
     "------------------Insert------------------"
     def insert_beginning(self, new_node):
         """
