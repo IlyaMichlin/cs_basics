@@ -2,8 +2,8 @@ from basics.linked_list import LinkedList, Node
 
 
 class DolbyNode(Node):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, data=None):
+        super().__init__(data=data)
         self.prev = None
 
 
@@ -75,6 +75,8 @@ class DoublyLinkedList(LinkedList):
         """
         remove node from the beginning of the list
         """
+        if self.head is None:
+            return
         super().remove_beginning()
         self.head.next.prev = None
 
@@ -91,10 +93,10 @@ class DoublyLinkedList(LinkedList):
             return
 
         node = self.head
-        for i in range(idx - 1):
-            node = node.next
-            if node is None:
+        for i in range(idx):
+            if node.next is None:
                 return
+            node = node.next
         remove_node(node)
 
     def remove_by_value(self, data):
@@ -110,3 +112,6 @@ class DoublyLinkedList(LinkedList):
 
         node = super().find_node(data)
         remove_node(node)
+
+
+list1 = DoublyLinkedList()

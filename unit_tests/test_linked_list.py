@@ -1,5 +1,5 @@
 import unittest
-from basics.linked_list import LinkedList
+from basics.linked_list import LinkedList, Node
 
 
 def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
@@ -17,7 +17,7 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
         if as_str:
             # generate ascending linked list with data as string
             for n in range(nums):
-                list1.insert_end(str(n))
+                list1.insert_end(Node(str(n)))
 
             if with_ref:
                 # return ascending linked list and reference list with data as string
@@ -27,7 +27,7 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
         else:
             # generate ascending linked list
             for n in range(nums):
-                list1.insert_end(n)
+                list1.insert_end(Node(n))
 
             if with_ref:
                 # return ascending linked list and reference list
@@ -38,7 +38,7 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
         if as_str:
             # generate descending linked list with data as string
             for n in range(nums):
-                list1.insert_beginning(str(n))
+                list1.insert_beginning(Node(str(n)))
 
             if with_ref:
                 # return descending linked list and reference list with data as string
@@ -48,7 +48,7 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
         else:
             # generate descending linked list
             for n in range(nums):
-                list1.insert_beginning(n)
+                list1.insert_beginning(Node(n))
 
             if with_ref:
                 # return descending linked list and reference list
@@ -58,7 +58,6 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
 
 
 class Test(unittest.TestCase):
-
     "------------------Insert------------------"
     def test_insert_beginning(self):
         """
@@ -68,14 +67,14 @@ class Test(unittest.TestCase):
         list1 = LinkedList()
         data = 10
         idx = 10
-        list1.insert(data, idx)
+        list1.insert(Node(data), idx)
         self.assertEqual(list(list1), [])
 
         # generate linked list
         list1 = LinkedList()
-        list1.insert(10, 0)
-        list1.insert(20, 1)
-        list1.insert(30, 1)
+        list1.insert(Node(10), 0)
+        list1.insert(Node(20), 1)
+        list1.insert(Node(30), 1)
         reference_arr = [10, 30, 20]
 
         # test insert
@@ -89,7 +88,7 @@ class Test(unittest.TestCase):
         # test insert_end on empty linked list
         list1 = LinkedList()
         data = 10
-        list1.insert_end(data)
+        list1.insert_end(Node(data))
         self.assertEqual(list(list1), [data])
 
         # generate linked list using insert_end
@@ -104,13 +103,13 @@ class Test(unittest.TestCase):
         """
         # test on empty linked list
         list1 = LinkedList()
-        list1.insert(10, 3)
+        list1.insert(Node(10), 3)
         list_arr = list(list1)
         self.assertEqual(list_arr, [])
 
         # test on linked list with 1 node
-        list1.insert(20, 0)
-        list1.insert(30, 3)
+        list1.insert(Node(20), 0)
+        list1.insert(Node(30), 3)
         list_arr = list(list1)
         self.assertEqual(list_arr, [20])
 
@@ -121,14 +120,14 @@ class Test(unittest.TestCase):
         # insert in the middle
         insert_idx = 3
         insert_val = 100
-        list1.insert(insert_val, insert_idx)
+        list1.insert(Node(insert_val), insert_idx)
 
         # compare to reference
         list_arr = list(list1)
         reference_arr = reference_arr[:insert_idx] + [insert_val] + reference_arr[insert_idx:]
         self.assertEqual(list_arr, reference_arr)
 
-    "------------------Gleneric------------------"
+    "------------------Generic------------------"
     def test_len(self):
         """
         test __len__()
