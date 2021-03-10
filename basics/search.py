@@ -60,7 +60,7 @@ def divide_conquer(array, val, index, low, high):
 "------------------Interpolation------------------"
 
 
-def interpolation_search(array, val):
+def search_interpolation(array, val):
     """
     interpolation search
     :param array: array to search
