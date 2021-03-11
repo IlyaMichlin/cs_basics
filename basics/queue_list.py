@@ -1,5 +1,4 @@
-from basics.circular_linked_list import CircularLinkedList
-from basics.doubly_linked_list import DolbyNode as Node
+from basics.linked_list import LinkedList, Node
 
 
 class Queue:
@@ -7,7 +6,7 @@ class Queue:
     Queue using Circular Double Linked List
     """
     def __init__(self):
-        self.queue = CircularLinkedList()
+        self.queue = LinkedList()
         self.is_full = False
         self.is_empty = True
 
@@ -28,7 +27,7 @@ class Queue:
         :return: item data
         """
         node = self.queue.fild_last_node()
-        self.queue.remove_end()
+        self.queue.remove_beginning()
 
         if self.queue.head is None:
             self.is_empty = True
@@ -44,4 +43,7 @@ class Queue:
         gets the element at the front of the queue without removing it
         :return: item data
         """
-        return self.queue.fild_last_node().data
+        node = self.queue.head
+        if node is None:
+            return None
+        return node.data

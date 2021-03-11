@@ -1,5 +1,5 @@
 import unittest
-from basics.queue_struct import Queue
+from basics.queue_list import Queue
 
 
 def generate_queue(queue_size):
@@ -55,7 +55,7 @@ class Test(unittest.TestCase):
         self.assertEqual(len(queue), queue_size)
 
         peek = queue.peek()
-        self.assertEqual(peek, queue_size - 1)
+        self.assertEqual(peek, 0)
 
 
 if __name__ == '__main__':

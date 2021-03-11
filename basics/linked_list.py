@@ -27,6 +27,7 @@ class LinkedList:
         linked list
         """
         self.head = None
+        self.tail = None
 
     def __len__(self):
         node = self.head
@@ -98,13 +99,14 @@ class LinkedList:
         find and return the last node in the list
         :return: last node in the list
         """
-        if self.head is None:
-            return
-
-        node = self.head
-        while node.next is not None:
-            node = node.next
-        return node
+        return self.tail
+        # if self.head is None:
+        #     return
+        #
+        # node = self.head
+        # while node.next is not None:
+        #     node = node.next
+        # return node
 
     "------------------Insert------------------"
     def insert_beginning(self, new_node):
@@ -114,20 +116,28 @@ class LinkedList:
         """
         new_node.next = self.head
         self.head = new_node
+        if self.tail is None:
+            self.tail = new_node
 
     def insert_end(self, new_node):
         """
         insert node at the end of the list
         :param new_node: new node
         """
-        if self.head is None:
-            self.insert_beginning(new_node)
-            return
+        if self.tail is None:
+            self.head = new_node
+        else:
+            self.tail.next = new_node
+        self.tail = new_node
 
-        node = self.head
-        while node.next is not None:
-            node = node.next
-        node.next = new_node
+        # if self.head is None:
+        #     self.insert_beginning(new_node)
+        #     return
+        #
+        # node = self.head
+        # while node.next is not None:
+        #     node = node.next
+        # node.next = new_node
 
     def insert(self, new_node, idx):
         """
@@ -150,6 +160,7 @@ class LinkedList:
 
         if node.next is None:
             node.next = new_node
+            self.tail = new_node
         else:
             tmp = node.next
             node.next = new_node
@@ -166,6 +177,8 @@ class LinkedList:
         tmp = self.head
         self.head = tmp.next
         del tmp
+        if self.head is None:
+            self.tail = None
 
     def remove_by_index(self, idx):
         """
@@ -184,6 +197,8 @@ class LinkedList:
             node = node.next
             if node.next is None:
                 return
+        if node.next == self.tail:
+            self.tail = node
         remove_next(node)
 
     def remove_by_value(self, data):
@@ -198,4 +213,6 @@ class LinkedList:
             return
 
         node = self.find_node_pointer(data)
+        if node is not None and node.next == self.tail:
+            self.tail = node
         remove_next(node)
