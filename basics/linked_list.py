@@ -22,12 +22,20 @@ def remove_next(node):
 
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self, nodes=None):
         """
         linked list
         """
         self.head = None
         self.tail = None
+
+        if nodes is not None:
+            node = Node(data=nodes[0])
+            self.head = node
+            for elem in nodes[1:]:
+                node.next = Node(data=elem)
+                node = node.next
+            self.tail = node
 
     def __len__(self):
         node = self.head
@@ -45,9 +53,11 @@ class LinkedList:
         return str(list(self))
 
     def __iter__(self):
-        list_len = self.__len__()
+        # if self.head is None:
+        #     return None
+
         node = self.head
-        for _ in range(list_len):
+        while node is not None:
             yield node.data
             node = node.next
 
@@ -100,13 +110,6 @@ class LinkedList:
         :return: last node in the list
         """
         return self.tail
-        # if self.head is None:
-        #     return
-        #
-        # node = self.head
-        # while node.next is not None:
-        #     node = node.next
-        # return node
 
     "------------------Insert------------------"
     def insert_beginning(self, new_node):
@@ -124,20 +127,12 @@ class LinkedList:
         insert node at the end of the list
         :param new_node: new node
         """
-        if self.tail is None:
-            self.head = new_node
-        else:
-            self.tail.next = new_node
-        self.tail = new_node
+        if self.head is None:
+            self.insert_beginning(new_node)
+            return
 
-        # if self.head is None:
-        #     self.insert_beginning(new_node)
-        #     return
-        #
-        # node = self.head
-        # while node.next is not None:
-        #     node = node.next
-        # node.next = new_node
+        self.tail.next = new_node
+        self.tail = new_node
 
     def insert(self, new_node, idx):
         """
@@ -159,8 +154,7 @@ class LinkedList:
                 return
 
         if node.next is None:
-            node.next = new_node
-            self.tail = new_node
+            self.insert_end(new_node)
         else:
             tmp = node.next
             node.next = new_node
@@ -179,6 +173,25 @@ class LinkedList:
         del tmp
         if self.head is None:
             self.tail = None
+
+    def remove_end(self):
+        """
+        remove node from the beginning of the list
+        """
+        if self.head is None:
+            return
+        if self.head == self.tail:
+            tmp = self.head
+            self.head = None
+            self.tail = None
+            del tmp
+        else:
+            node = self.head
+            while node.next != self.tail:
+                node = node.next
+            self.tail = node
+            del node.next
+            node.next = None
 
     def remove_by_index(self, idx):
         """

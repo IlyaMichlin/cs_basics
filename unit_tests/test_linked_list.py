@@ -11,50 +11,21 @@ def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
     :param as_str: convert data to string flag
     :return: generated linked list with reference list optionally
     """
-    list1 = LinkedList()
-
     if asc:
         if as_str:
-            # generate ascending linked list with data as string
-            for n in range(nums):
-                list1.insert_end(Node(str(n)))
-
-            if with_ref:
-                # return ascending linked list and reference list with data as string
-                return list1, [str(n) for n in range(nums)]
-            # return ascending linked list only with data as string
-            return list1
+            list_data = [str(n) for n in range(nums)]
         else:
-            # generate ascending linked list
-            for n in range(nums):
-                list1.insert_end(Node(n))
-
-            if with_ref:
-                # return ascending linked list and reference list
-                return list1, [n for n in range(nums)]
-            # return ascending linked list only
-            return list1
+            list_data = [n for n in range(nums)]
     else:
         if as_str:
-            # generate descending linked list with data as string
-            for n in range(nums):
-                list1.insert_beginning(Node(str(n)))
-
-            if with_ref:
-                # return descending linked list and reference list with data as string
-                return list1, [str(n - 1) for n in range(nums, 0, -1)]
-            # return descending linked list only with data as string
-            return list1
+            list_data = [str(n - 1) for n in range(nums, 0, -1)]
         else:
-            # generate descending linked list
-            for n in range(nums):
-                list1.insert_beginning(Node(n))
+            list_data = [n - 1 for n in range(nums, 0, -1)]
 
-            if with_ref:
-                # return descending linked list and reference list
-                return list1, [n - 1 for n in range(nums, 0, -1)]
-            # return descending linked list only
-            return list1
+    list1 = LinkedList(list_data)
+    if with_ref:
+        return list1, list_data
+    return list1
 
 
 class Test(unittest.TestCase):
@@ -244,6 +215,26 @@ class Test(unittest.TestCase):
 
         # compare results to reference
         reference_arr = reference_arr[1:]
+        self.assertEqual(list_arr, reference_arr)
+
+    def test_remove_end(self):
+        """
+        test remove_end()
+        """
+        # test on empty linked list
+        list1 = LinkedList()
+        list1.remove_end()
+
+        # generate linked list
+        nums = 10
+        list1, reference_arr = generate_filled_list(nums)
+
+        # remove from beginning
+        list1.remove_end()
+        list_arr = list(list1)
+
+        # compare results to reference
+        reference_arr = reference_arr[:-1]
         self.assertEqual(list_arr, reference_arr)
 
     def test_remove_by_index(self):
