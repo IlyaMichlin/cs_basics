@@ -1,60 +1,6 @@
 import unittest
 from basics.doubly_linked_list import DoublyLinkedList, DolbyNode
-
-
-def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
-    """
-    generate linked list and optionally reference list
-    :param nums: number of nodes to generate and their data
-    :param asc: ascending order flag
-    :param with_ref: generate reference list flag
-    :param as_str: convert data to string flag
-    :return: generated linked list with reference list optionally
-    """
-    list1 = DoublyLinkedList()
-
-    if asc:
-        if as_str:
-            # generate ascending linked list with data as string
-            for n in range(nums):
-                list1.insert_end(DolbyNode(str(n)))
-
-            if with_ref:
-                # return ascending linked list and reference list with data as string
-                return list1, [str(n) for n in range(nums)]
-            # return ascending linked list only with data as string
-            return list1
-        else:
-            # generate ascending linked list
-            for n in range(nums):
-                list1.insert_end(DolbyNode(n))
-
-            if with_ref:
-                # return ascending linked list and reference list
-                return list1, [n for n in range(nums)]
-            # return ascending linked list only
-            return list1
-    else:
-        if as_str:
-            # generate descending linked list with data as string
-            for n in range(nums):
-                list1.insert_beginning(DolbyNode(str(n)))
-
-            if with_ref:
-                # return descending linked list and reference list with data as string
-                return list1, [str(n - 1) for n in range(nums, 0, -1)]
-            # return descending linked list only with data as string
-            return list1
-        else:
-            # generate descending linked list
-            for n in range(nums):
-                list1.insert_beginning(DolbyNode(n))
-
-            if with_ref:
-                # return descending linked list and reference list
-                return list1, [n - 1 for n in range(nums, 0, -1)]
-            # return descending linked list only
-            return list1
+from unit_tests.universal import generate_filled_list
 
 
 def get_data_from_last_to_first(last_node):
@@ -112,7 +58,7 @@ class Test(unittest.TestCase):
 
         # generate linked list using insert_end
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums)
         list_arr = list(list1)
         self.assertEqual(list_arr, reference_arr)
 
@@ -138,7 +84,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums)
 
         # insert in the middle
         insert_idx = 3
@@ -165,7 +111,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False)
+        list1 = generate_filled_list(DoublyLinkedList, nums, with_ref=False)
 
         # test len()
         self.assertEqual(len(list1), nums)
@@ -176,7 +122,7 @@ class Test(unittest.TestCase):
         """
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums)
 
         # test list()
         self.assertEqual(list(list1), reference_arr)
@@ -193,7 +139,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False, as_str=True)
+        list1 = generate_filled_list(DoublyLinkedList, nums, with_ref=False, as_str=True)
 
         # test search on value not in linked list
         node = list1.find_node(nums)
@@ -215,7 +161,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False, as_str=True)
+        list1 = generate_filled_list(DoublyLinkedList, nums, with_ref=False, as_str=True)
 
         # test search on value not in linked list
         search_node = str(nums)
@@ -238,7 +184,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 1
-        list1 = generate_filled_list(nums, with_ref=False)
+        list1 = generate_filled_list(DoublyLinkedList, nums, with_ref=False)
 
         # test for finding last node with 1 node
         last_node = list1.fild_last_node()
@@ -246,7 +192,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False)
+        list1 = generate_filled_list(DoublyLinkedList, nums, with_ref=False)
 
         # test for finding last node
         last_node = list1.fild_last_node()
@@ -260,10 +206,11 @@ class Test(unittest.TestCase):
         # test on empty linked list
         list1 = DoublyLinkedList()
         list1.remove_beginning()
+        self.assertEqual(len(list1), 0)
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums)
 
         # remove from beginning
         list1.remove_beginning()
@@ -277,6 +224,31 @@ class Test(unittest.TestCase):
         data = get_data_from_last_to_first(list1.fild_last_node())
         self.assertEqual(data, reference_arr[::-1])
 
+    def test_remove_end(self):
+        """
+        test remove_end()
+        """
+        # test on empty linked list
+        list1 = DoublyLinkedList()
+        list1.remove_beginning()
+        self.assertEqual(len(list1), 0)
+
+        # generate linked list
+        nums = 10
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums)
+
+        # remove from beginning
+        list1.remove_end()
+        list_arr = list(list1)
+
+        # compare results to reference
+        reference_arr = reference_arr[:-1]
+        self.assertEqual(list_arr, reference_arr)
+
+        # test list from last to first
+        data = get_data_from_last_to_first(list1.fild_last_node())
+        self.assertEqual(data, reference_arr[::-1])
+
     def test_remove_by_index(self):
         """
         test remove_by_index()
@@ -284,10 +256,11 @@ class Test(unittest.TestCase):
         # test on empty linked list
         list1 = DoublyLinkedList()
         list1.remove_by_index(10)
+        self.assertEqual(len(list1), 0)
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums)
 
         # test removing index outside of linked list
         list1.remove_by_index(100)
@@ -311,10 +284,11 @@ class Test(unittest.TestCase):
         # test on empty linked list
         list1 = DoublyLinkedList()
         list1.remove_by_value(10)
+        self.assertEqual(len(list1), 0)
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums, as_str=True)
+        list1, reference_arr = generate_filled_list(DoublyLinkedList, nums, as_str=True)
 
         # test removing value not present in linked list
         list1.remove_by_value('100')

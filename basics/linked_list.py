@@ -53,9 +53,6 @@ class LinkedList:
         return str(list(self))
 
     def __iter__(self):
-        # if self.head is None:
-        #     return None
-
         node = self.head
         while node is not None:
             yield node.data

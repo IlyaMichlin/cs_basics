@@ -30,6 +30,12 @@ def remove_node(node, head):
 
 
 class CircularLinkedList(DoublyLinkedList):
+    def __init__(self, nodes=None):
+        super().__init__(nodes=nodes)
+        if nodes is not None:
+            self.head.prev = self.tail
+            self.tail.next = self.head
+
     def __len__(self):
         if self.head is None:
             return 0
@@ -42,6 +48,17 @@ class CircularLinkedList(DoublyLinkedList):
             node = node.next
             count += 1
         return count
+
+    def __iter__(self):
+        if self.head is None:
+            return
+
+        node = self.head
+        yield node.data
+        node = node.next
+        while node != self.head:
+            yield node.data
+            node = node.next
 
     "------------------Search------------------"
     def find_node(self, data):
@@ -90,15 +107,20 @@ class CircularLinkedList(DoublyLinkedList):
         insert node at the beginning of the list
         :param new_node: new node
         """
-        new_node.next = self.head
-        self.head = new_node
-        if new_node.next is None:
-            new_node.next = new_node
-            new_node.prev = new_node
-        else:
-            new_node.prev = new_node.next.prev
-            new_node.next.prev.next = new_node
-            new_node.next.prev = new_node
+        super().insert_beginning(new_node)
+        self.head.prev = self.tail
+        self.tail.next = self.head
+
+
+        # new_node.next = self.head
+        # self.head = new_node
+        # if new_node.next is None:
+        #     new_node.next = new_node
+        #     new_node.prev = new_node
+        # else:
+        #     new_node.prev = new_node.next.prev
+        #     new_node.next.prev.next = new_node
+        #     new_node.next.prev = new_node
 
     def insert_end(self, new_node):
         """
@@ -129,6 +151,7 @@ class CircularLinkedList(DoublyLinkedList):
             node = node.next
 
         insert_node(node, new_node)
+        self.tail = self.head.prev
 
     "------------------Remove------------------"
     def remove_beginning(self):

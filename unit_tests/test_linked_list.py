@@ -1,31 +1,6 @@
 import unittest
 from basics.linked_list import LinkedList, Node
-
-
-def generate_filled_list(nums, asc=True, with_ref=True, as_str=False):
-    """
-    generate linked list and optionally reference list
-    :param nums: number of nodes to generate and their data
-    :param asc: ascending order flag
-    :param with_ref: generate reference list flag
-    :param as_str: convert data to string flag
-    :return: generated linked list with reference list optionally
-    """
-    if asc:
-        if as_str:
-            list_data = [str(n) for n in range(nums)]
-        else:
-            list_data = [n for n in range(nums)]
-    else:
-        if as_str:
-            list_data = [str(n - 1) for n in range(nums, 0, -1)]
-        else:
-            list_data = [n - 1 for n in range(nums, 0, -1)]
-
-    list1 = LinkedList(list_data)
-    if with_ref:
-        return list1, list_data
-    return list1
+from unit_tests.universal import generate_filled_list
 
 
 class Test(unittest.TestCase):
@@ -64,7 +39,7 @@ class Test(unittest.TestCase):
 
         # generate linked list using insert_end
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(LinkedList, nums)
         list_arr = list(list1)
         self.assertEqual(list_arr, reference_arr)
 
@@ -86,7 +61,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(LinkedList, nums)
 
         # insert in the middle
         insert_idx = 3
@@ -109,7 +84,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False)
+        list1 = generate_filled_list(LinkedList, nums, with_ref=False)
 
         # test len()
         self.assertEqual(len(list1), nums)
@@ -120,7 +95,7 @@ class Test(unittest.TestCase):
         """
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(LinkedList, nums)
 
         # test list()
         self.assertEqual(list(list1), reference_arr)
@@ -137,7 +112,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False, as_str=True)
+        list1 = generate_filled_list(LinkedList, nums, with_ref=False, as_str=True)
 
         # test search on value not in linked list
         node = list1.find_node(nums)
@@ -159,7 +134,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False, as_str=True)
+        list1 = generate_filled_list(LinkedList, nums, with_ref=False, as_str=True)
 
         # test search on value not in linked list
         search_node = str(nums)
@@ -182,7 +157,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 1
-        list1 = generate_filled_list(nums, with_ref=False)
+        list1 = generate_filled_list(LinkedList, nums, with_ref=False)
 
         # test for finding last node with 1 node
         last_node = list1.fild_last_node()
@@ -190,7 +165,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1 = generate_filled_list(nums, with_ref=False)
+        list1 = generate_filled_list(LinkedList, nums, with_ref=False)
 
         # test for finding last node
         last_node = list1.fild_last_node()
@@ -207,7 +182,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(LinkedList, nums)
 
         # remove from beginning
         list1.remove_beginning()
@@ -227,7 +202,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(LinkedList, nums)
 
         # remove from beginning
         list1.remove_end()
@@ -247,7 +222,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums)
+        list1, reference_arr = generate_filled_list(LinkedList, nums)
 
         # test removing index outside of linked list
         list1.remove_by_index(100)
@@ -270,7 +245,7 @@ class Test(unittest.TestCase):
 
         # generate linked list
         nums = 10
-        list1, reference_arr = generate_filled_list(nums, as_str=True)
+        list1, reference_arr = generate_filled_list(LinkedList, nums, as_str=True)
 
         # test removing value not present in linked list
         list1.remove_by_value('100')

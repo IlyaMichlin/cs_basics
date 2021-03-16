@@ -16,6 +16,19 @@ def remove_node(node):
 
 
 class DoublyLinkedList(LinkedList):
+    def __init__(self, nodes=None):
+        super().__init__(nodes=None)
+
+        if nodes is not None:
+            node = DolbyNode(data=nodes[0])
+            self.head = node
+            for elem in nodes[1:]:
+                node.next = DolbyNode(data=elem)
+                n = node
+                node = node.next
+                node.prev = n
+            self.tail = node
+
     "------------------Insert------------------"
     def insert_beginning(self, new_node):
         """
@@ -40,6 +53,7 @@ class DoublyLinkedList(LinkedList):
             node = node.next
         node.next = new_node
         new_node.prev = node
+        self.tail = new_node
 
     def insert(self, new_node, idx):
         """
@@ -60,10 +74,14 @@ class DoublyLinkedList(LinkedList):
             if node is None:
                 return
 
-        if node.next is not None:
-            tmp = node.next
-            new_node.next = tmp
-            tmp.prev = new_node
+        if node == self.tail:
+            node.next = new_node
+            new_node.prev = node
+            self.tail = new_node
+            return
+        tmp = node.next
+        new_node.next = tmp
+        tmp.prev = new_node
         node.next = new_node
         new_node.prev = node
 
@@ -74,9 +92,21 @@ class DoublyLinkedList(LinkedList):
         """
         if self.head is None:
             return
-        super().remove_beginning()
-        self.head.next.prev = self.head
+        tmp = self.head
+        self.head = tmp.next
         self.head.prev = None
+        del tmp
+
+    def remove_end(self):
+        """
+        remove node from the ebd of the list
+        """
+        if self.head is None:
+            return
+        tmp = self.tail
+        self.tail = tmp.prev
+        self.tail.next = None
+        del tmp
 
     def remove_by_index(self, idx):
         """
